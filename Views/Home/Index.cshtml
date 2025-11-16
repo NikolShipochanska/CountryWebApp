@@ -35,13 +35,12 @@ else
                     {
                         <div>
                             <a asp-controller="Countries" asp-action="Edit" asp-route-id="@country.Id" class="btn btn-sm btn-warning">Edit</a>
-                            <a asp-controller="Countries" asp-action="Delete" asp-route-id="@country.Id" class="btn btn-sm btn-danger">Delete</a>
                         </div>
                     }
                 </div>
                 <div class="card-body">
+                    <p><strong>Capital:</strong> @country.Capital</p>
                     <p><strong>Population:</strong> @country.Population.ToString("N0") people</p>
-
                     @if (country.Cities.Any())
                     {
                         <h6>Cities:</h6>
@@ -54,7 +53,6 @@ else
                                     {
                                         <div>
                                             <a asp-controller="Cities" asp-action="Edit" asp-route-id="@city.Id" class="btn btn-sm btn-outline-secondary">Edit</a>
-                                            <a asp-controller="Cities" asp-action="Delete" asp-route-id="@city.Id" class="btn btn-sm btn-outline-danger">Delete</a>
                                         </div>
                                     }
                                 </li>

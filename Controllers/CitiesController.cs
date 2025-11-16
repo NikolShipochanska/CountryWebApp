@@ -17,14 +17,21 @@ namespace CountryWebApp.Controllers
             _context = context;
         }
 
-        // GET: /Cities/Create
-        public IActionResult Create()
+        // GET: /Cities/Create?countryId=5
+        public IActionResult Create(int? countryId)
         {
             ViewBag.Countries = new SelectList(
                 _context.Countries.OrderBy(c => c.Name),
                 "Id",
-                "Name"
-            );  
+                "Name",
+                countryId
+            );
+
+            var city = new City();
+            if (countryId.HasValue && countryId.Value > 0)
+            {
+                city.CountryId = countryId.Value;
+            }
 
             return View();
         }
@@ -92,6 +99,14 @@ namespace CountryWebApp.Controllers
                     ModelState.AddModelError("Name", "City with this name already exist!");
                 }
             }
+
+            ViewBag.Countries = new SelectList(
+                _context.Countries.OrderBy(c => c.Name),
+                "Id",
+                "Name",
+                city.CountryId
+            );
+
             return View(city);
         }
     }

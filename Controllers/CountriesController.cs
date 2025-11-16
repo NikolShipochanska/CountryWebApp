@@ -64,7 +64,7 @@ namespace CountryWebApp.Controllers
                 {
                     _context.Update(country);
                     await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction("Index", "Home");
                 }
                 catch (DbUpdateException)
                 {
