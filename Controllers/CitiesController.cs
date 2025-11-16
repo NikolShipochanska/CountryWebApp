@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using CountryWebApp.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CountryWebApp.Controllers
 {
@@ -19,6 +20,12 @@ namespace CountryWebApp.Controllers
         // GET: /Cities/Create
         public IActionResult Create()
         {
+            ViewBag.Countries = new SelectList(
+                _context.Countries.OrderBy(c => c.Name),
+                "Id",
+                "Name"
+            );  
+
             return View();
         }
 
@@ -33,13 +40,21 @@ namespace CountryWebApp.Controllers
                 {
                     _context.Cities.Add(city);
                     await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction("Index", "Home");
                 }
                 catch (DbUpdateException)
                 {
                     ModelState.AddModelError("Name", "City with this name already exist!");
                 }
             }
+
+            ViewBag.Countries = new SelectList(
+                _context.Countries.OrderBy(c => c.Name),
+                "Id",
+                "Name",
+                city.CountryId  
+            );
+
             return View(city);
         }
 
@@ -48,6 +63,13 @@ namespace CountryWebApp.Controllers
         {
             var city = await _context.Cities.FindAsync(id);
             if (city == null) return NotFound();
+
+            ViewBag.Countries = new SelectList(
+                _context.Countries.OrderBy(c => c.Name),
+                "Id",
+                "Name",
+                city.CountryId
+            );
             return View(city);
         }
 
@@ -63,7 +85,7 @@ namespace CountryWebApp.Controllers
                 {
                     _context.Update(city);
                     await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction("Index", "Home");
                 }
                 catch (DbUpdateException)
                 {

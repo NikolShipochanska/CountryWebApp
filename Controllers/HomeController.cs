@@ -1,32 +1,31 @@
 using System.Diagnostics;
+using CountryWebApp.Data;
+using CountryWebApp.Helpers;
 using CountryWebApp.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CountryWebApp.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly AppDbContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(AppDbContext context)
         {
-            _logger = logger;
+            _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index(int? pageNumber)
         {
-            return View();
-        }
+            int pageSize = 3;
+            var countries = _context.Countries
+                .Include(c => c.Cities)
+                .AsNoTracking()
+                .OrderBy(c => c.Name);
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            var paginated = await PaginatedList<Country>.CreateAsync(countries, pageNumber ?? 1, pageSize);
+            return View(paginated);
         }
     }
 }

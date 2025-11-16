@@ -1,0 +1,29 @@
+﻿@model CountryWebApp.Models.City
+
+@{
+	ViewData["Title"] = "Create City";
+}
+
+<h1 class="mb-4">Add New City</h1>
+
+<form asp-action="Create" method="post">
+	@Html.AntiForgeryToken()
+	<div class="mb-3">
+		<label asp-for="Name" class="form-label"></label>
+		<input asp-for="Name" class="form-control" />
+		<span asp-validation-for="Name" class="text-danger"></span>
+	</div>
+	<div class="mb-3">
+		<label asp-for="CountryId" class="form-label">Country</label>
+		<select asp-for="CountryId" class="form-select" asp-items="@ViewBag.Countries">
+			<option value="">-- Select Country --</option>
+		</select>
+		<span asp-validation-for="CountryId" class="text-danger"></span>
+	</div>
+	<button type="submit" class="btn btn-primary">Create</button>
+	<a asp-action="Index" asp-controller="Home" class="btn btn-secondary">Back to List</a>
+</form>
+
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}

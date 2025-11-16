@@ -9,7 +9,7 @@ namespace CountryWebApp.Models
 
         [Required(ErrorMessage = "The name of the city is required!")]
         public string Name { get; set; } = null!;
+        [Required(ErrorMessage = "Please select a country!")]
         public int CountryId { get; set; }
-        public Country Country { get; set; } = null!;
     }
 }

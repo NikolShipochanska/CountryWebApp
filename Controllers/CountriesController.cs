@@ -33,7 +33,7 @@ namespace CountryWebApp.Controllers
                 {
                     _context.Countries.Add(country);
                     await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction("Index", "Home");
                 }
                 catch (DbUpdateException)
                 {
