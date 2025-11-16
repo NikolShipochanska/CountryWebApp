@@ -43,15 +43,24 @@ namespace CountryWebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                try
+                var existingCountry = await _context.Countries
+                .FirstOrDefaultAsync(c => c.Name == city.Name);
+                if (existingCountry != null)
                 {
-                    _context.Cities.Add(city);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction("Index", "Home");
+                    ModelState.AddModelError("Name", "A city cannot have the same name as an existing country!");
                 }
-                catch (DbUpdateException)
+                else
                 {
-                    ModelState.AddModelError("Name", "City with this name already exist!");
+                    try
+                    {
+                        _context.Cities.Add(city);
+                        await _context.SaveChangesAsync();
+                        return RedirectToAction("Index", "Home");
+                    }
+                    catch (DbUpdateException)
+                    {
+                        ModelState.AddModelError("Name", "City with this name already exist!");
+                    }
                 }
             }
 
@@ -88,15 +97,24 @@ namespace CountryWebApp.Controllers
             if (id != city.Id) return NotFound();
             if (ModelState.IsValid)
             {
-                try
+                var existingCountry = await _context.Countries
+                .FirstOrDefaultAsync(c => c.Name == city.Name);
+                if (existingCountry != null)
                 {
-                    _context.Update(city);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction("Index", "Home");
+                    ModelState.AddModelError("Name", "A city cannot have the same name as an existing country!");
                 }
-                catch (DbUpdateException)
+                else
                 {
-                    ModelState.AddModelError("Name", "City with this name already exist!");
+                    try
+                    {
+                        _context.Update(city);
+                        await _context.SaveChangesAsync();
+                        return RedirectToAction("Index", "Home");
+                    }
+                    catch (DbUpdateException)
+                    {
+                        ModelState.AddModelError("Name", "City with this name already exist!");
+                    }
                 }
             }
 
