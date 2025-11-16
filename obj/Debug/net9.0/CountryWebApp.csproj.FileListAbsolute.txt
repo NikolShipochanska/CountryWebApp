@@ -215,3 +215,4 @@ C:\Users\Nikol\source\repos\CountryWebApp\CountryWebApp\obj\Debug\net9.0\refint\
 C:\Users\Nikol\source\repos\CountryWebApp\CountryWebApp\obj\Debug\net9.0\CountryWebApp.pdb
 C:\Users\Nikol\source\repos\CountryWebApp\CountryWebApp\obj\Debug\net9.0\CountryWebApp.genruntimeconfig.cache
 C:\Users\Nikol\source\repos\CountryWebApp\CountryWebApp\obj\Debug\net9.0\ref\CountryWebApp.dll
+C:\Users\Nikol\source\repos\CountryWebApp\CountryWebApp\obj\Debug\net9.0\CountryWebApp.sourcelink.json

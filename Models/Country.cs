@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace CountryWebApp.Models
 {
@@ -6,14 +7,12 @@ namespace CountryWebApp.Models
     {
         public int Id { get; set; }
 
-        [Required]
-        public string Name { get; set; }
-        [Required]
-        public string Capital { get; set; }
+        [Required(ErrorMessage = "The name of the country is required!")]
+        public string Name { get; set; } = null!;
+        [Required(ErrorMessage = "The capital is required!")]
+        public string Capital { get; set; } = null!;
         public long Population { get; set; }
 
-        public List<City> Cities { get; set; }
-        public Country() { }
-
+        public List<City> Cities { get; set; } = new List<City>();
     }
 }
