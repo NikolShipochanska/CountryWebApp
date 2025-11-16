@@ -2,7 +2,19 @@
     ViewData["Title"] = "Home Page";
 }
 
+
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <p>
+            <a asp-controller="Countries" asp-action="Create" class="btn btn-success">Add country</a>
+            <a asp-controller="Cities" asp-action="Create" class="btn btn-primary">Add city</a>
+        </p>
+    }
+    else
+    {
+        <p class="text-info">Only logged-in users can add or edit data.</p>
+    }
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
